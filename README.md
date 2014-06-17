@@ -37,29 +37,7 @@ grunt.initConfig({
 
 ### Options
 
-#### options.accessKey
-Type: `String`
-Default value: `''`
-
-Your BrowserStack account's access key, get it from [here](https://www.browserstack.com/accounts/automate).
-
-#### options.hostname
-Type: `String`
-Default value: `'localhost'`
-
-Tunnel's hostname.
-
-#### options.port
-Type: `Number`
-Default value `'3000'`
-
-Which port
-
-#### options.sslFlag
-Type: `Number`
-Default value `0`
-
-Whether to use HTTPS
+Options are passed directly to the underlying BrowserStack tunnel. Documentation can be foudn on the [browserstacktunnel-wrapper website](https://github.com/pghalliday/node-BrowserStackTunnel).
 
 ### Usage Examples
 
@@ -70,13 +48,12 @@ In this example, custom options are used to do something else with whatever else
 grunt.initConfig({
   browserstackTunnel: {
     options: {
-      accessKey: 'fakeKey'
-    },
-    development: {
-      options: {
-        port: 9000
-      }
-    },
+      hosts: [{
+        key: 'YOUR_ACCESS_KEY',
+        user: 'YOUR_USERNAME',
+        sslFlag: 0
+      }]
+    }
   },
 })
 ```

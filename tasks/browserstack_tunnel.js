@@ -1,22 +1,26 @@
 'use strict';
 module.exports = function(grunt) {
   grunt.registerMultiTask('browserstackTunnel', 'Create BrowserStack tunnel', function() {
-    var options = this.options({
-      accessKey: '',
-      hostname: 'localhost',
-      port: 3000,
-      sslFlag: 0
-    });
+    var options = this.options();
 
-    var BrowserStackTunnel = require('browserstacktunnel-wrapper');
-    var browserStackTunnel = new BrowserStackTunnel({
-      key: options.accessKey,
-      hosts: [{
+    if (options.accessKey) {
+      options.key = options.accessKey;
+      delete options.accessKey;
+    }
+
+    if (options.hostname || options.port || options.sslFlag) {
+      options.hosts = [{
         name: options.hostname,
         port: options.port,
         sslFlag: options.sslFlag
-      }]
-    });
+      }];
+      delete options.hostname;
+      delete options.port;
+      delete options.sslFlag;
+    }
+
+    var BrowserStackTunnel = require('browserstacktunnel-wrapper');
+    var browserStackTunnel = new BrowserStackTunnel(options);
 
     var done = this.async();
     browserStackTunnel.start(function (error) {
